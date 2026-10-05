@@ -65,7 +65,7 @@ Immutable Audit Log & Analytics Dashboard
 
 ## Features
 
-| Category | Details |
+| Category | Details |and files
 |---|---|
 | **AI Document Analysis** | PDF text extraction via PyMuPDF, document classification with confidence scores, structured field extraction, risk scoring, priority detection, and AI-recommended actions |
 | **Grounded QA Chat** | Ask natural-language questions about any uploaded document — answers are grounded in the actual extracted text |
