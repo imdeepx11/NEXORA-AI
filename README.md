@@ -80,7 +80,7 @@ Immutable Audit Log & Analytics Dashboard
 
 ---
 
-## Tech Stack
+## Tech Stack.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
