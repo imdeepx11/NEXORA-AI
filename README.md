@@ -63,7 +63,7 @@ Immutable Audit Log & Analytics Dashboard
 
 ---
 
-## Features are there
+## Features
 
 | Category | Details |
 |---|---|
