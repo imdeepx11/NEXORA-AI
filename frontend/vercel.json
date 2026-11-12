@@ -2,8 +2,8 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://nexora-backend-30jt.onrender.com/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://nexora-backend-30jt.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
