@@ -172,7 +172,7 @@ Activate the virtual environment:
 
 ```powershell
 # Windows PowerShell
-.\\venv\\Scripts\\Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
 
 ```bash
@@ -198,6 +198,13 @@ Open **Terminal 2** in the repository root:
 
 ```bash
 cd frontend
+
+# Optional: create your local environment file (recommended)
+# Windows PowerShell:
+Copy-Item .env.example .env
+# macOS / Linux:
+# cp .env.example .env
+
 npm install
 npm run dev
 ```
