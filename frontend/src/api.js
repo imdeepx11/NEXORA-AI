@@ -1,9 +1,9 @@
 import { auth } from './firebase-client';
 
 const rawBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
-const API_BASE = rawBase
-  ? (rawBase.endsWith('/api') ? rawBase : `${rawBase}/api`)
-  : (import.meta.env.DEV ? '/api' : 'https://nexora-backend-30jt.onrender.com/api');
+const API_BASE = import.meta.env.DEV
+  ? (rawBase ? (rawBase.endsWith('/api') ? rawBase : `${rawBase}/api`) : '/api')
+  : '/api';
 
 // Root of the backend (no /api) — used only for health-check pings
 const BACKEND_ROOT = API_BASE.replace(/\/api$/, '');
