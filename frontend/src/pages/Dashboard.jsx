@@ -37,7 +37,7 @@ export default function Dashboard({ user, onNavigateToAnalyzer, onNavigateToDocu
   }, []);
 
   const name = user?.name || user?.email?.split('@')[0] || 'Administrator';
-  const greeting = currentHour < 12 ? 'Good morning' : currentHour < 17 ? 'Good afternoon' : 'Good evening';
+  const greeting = currentHour < 12 ? 'Good morning' : currentHour < 17 ? 'Good afternoon' : currentHour < 21 ? 'Good evening' : 'Good night';
   const k = analytics?.kpis || {};
   const processed = k.documents_processed ?? 0;
   const pending = k.pending_approval ?? 0;
