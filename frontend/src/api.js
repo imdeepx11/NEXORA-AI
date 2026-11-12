@@ -24,6 +24,24 @@ export async function pingBackendRoot() {
   }
 }
 
+/**
+ * Wait for the backend to become healthy before sending authentication.
+ * This also wakes a sleeping Render free instance after a period of inactivity.
+ */
+export async function waitForBackend(maxWaitMs = 90000) {
+  const deadline = Date.now() + maxWaitMs;
+
+  while (Date.now() < deadline) {
+    if (await pingBackendRoot()) return true;
+
+    if (Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+  }
+
+  throw new Error('Backend server is taking longer than usual to start. Please try again.');
+}
+
 export async function fetchApi(endpoint, options = {}, retryCount = 0) {
   try {
     const token = auth.currentUser ? await auth.currentUser.getIdToken() : null;
@@ -62,7 +80,13 @@ export const api = {
   register: (userData) => fetchApi('/auth/register', { method: 'POST', body: JSON.stringify(userData) }),
   sendPhoneCode: (phone) => fetchApi('/auth/send-phone-code', { method: 'POST', body: JSON.stringify({ phone }) }),
   phoneLogin: (phone, code, name) => fetchApi('/auth/phone-login', { method: 'POST', body: JSON.stringify({ phone, code, name }) }),
-  loginWithGoogle: (idToken, displayName, email) => fetchApi('/auth/google', { method: 'POST', body: JSON.stringify({ id_token: idToken, name: displayName || null, email: email || null }) }),
+  loginWithGoogle: async (idToken, displayName, email) => {
+    await waitForBackend();
+    return fetchApi('/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({ id_token: idToken, name: displayName || null, email: email || null })
+    });
+  },
   forgotPassword: (email) => fetchApi('/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) }),
   verifyCode: (email, code) => fetchApi('/auth/verify-code', { method: 'POST', body: JSON.stringify({ email, code }) }),
   verifyResetToken: (token) => fetchApi(`/auth/verify-reset-token/${token}`),
