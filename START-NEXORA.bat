@@ -31,6 +31,13 @@ if not exist "venv\Scripts\python.exe" (
 
 if not exist "venv\Scripts\python.exe" goto setup_failed
 
+if not exist "venv\.nexora-deps-installed" (
+    echo Installing backend dependencies for the first run...
+    "venv\Scripts\python.exe" -m pip install -r requirements.txt
+    if errorlevel 1 goto pip_failed
+    type nul > "venv\.nexora-deps-installed"
+)
+
 if not exist "frontend\node_modules\vite\bin\vite.js" (
     echo Installing frontend dependencies for the first run...
     pushd frontend
@@ -105,6 +112,13 @@ exit /b 1
 echo.
 echo ERROR: Could not create the Python virtual environment.
 echo Check that Python is installed and available in PATH.
+pause
+exit /b 1
+
+:pip_failed
+echo.
+echo ERROR: Backend dependency installation failed.
+echo Check the pip output above, then run START-NEXORA.bat again.
 pause
 exit /b 1
 
