@@ -138,44 +138,63 @@ NEXORA-AI/
 
 ## Quick Start (Local Development)
 
+> **Important:** The `localhost` links below are local development addresses. They work only on the same computer where you have started the backend and frontend servers. Opening these links directly from GitHub will not start the application.
+
 ### Prerequisites
 
 - **Python** 3.10+
-- **Node.js** 18+ & npm
+- **Node.js** 20.19+ or 22.12+ and npm (required by the Vite 8 frontend)
+
+Check your installed versions before setup:
+
+```bash
+python --version
+node --version
+npm --version
+```
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/imdeepx11/Nexora-AI.git
-cd Nexora-AI
+git clone https://github.com/imdeepx11/NEXORA-AI.git
+cd NEXORA-AI
 ```
 
-### 2. Set up the backend
+### 2. Set up and start the backend
+
+Open **Terminal 1** in the repository root:
 
 ```bash
-# Create and activate virtual environment
 python -m venv venv
+```
 
+Activate the virtual environment:
+
+```powershell
 # Windows PowerShell
-.\venv\Scripts\Activate.ps1
+.\\venv\\Scripts\\Activate.ps1
+```
 
+```bash
 # macOS / Linux
 source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
 ```
 
-### 3. Start the backend
+Install the backend dependencies and start the server:
 
 ```bash
+pip install -r requirements.txt
 python main.py
 ```
 
-The API server starts at **http://127.0.0.1:8000** with auto-reload enabled.
-- Swagger docs: **http://127.0.0.1:8000/docs**
+**Keep Terminal 1 open.** When the backend is running, these local endpoints are available on your computer:
 
-### 4. Start the frontend
+- API health check: [http://127.0.0.1:8000/api/health](http://127.0.0.1:8000/api/health) — expected response: `{"status":"ok"}`
+- Swagger API documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+### 3. Set up and start the frontend
+
+Open **Terminal 2** in the repository root:
 
 ```bash
 cd frontend
@@ -183,9 +202,17 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173** in your browser.
+Keep Terminal 2 open as well. Vite prints the local address when it starts. Open the address shown in that terminal, normally:
 
----
+[http://localhost:5173](http://localhost:5173)
+
+If port 5173 is already in use, Vite may select another port (for example, 5174). Use the exact address printed in the terminal.
+
+### Local Development Troubleshooting
+
+- **The browser says “localhost refused to connect”:** the relevant server is not running, has stopped, or is using a different port. Start the backend and frontend in two separate terminals.
+- **The frontend starts but API calls fail:** confirm the backend health check above returns `{"status":"ok"}`, and keep `VITE_API_BASE_URL=/api` in `frontend/.env` if you created that file from `.env.example`. The Vite development proxy forwards `/api` requests to the local backend.
+- **Vite reports an unsupported Node.js version:** install Node.js 20.19+ or 22.12+, then reopen the terminal and run `npm install` again.
 
 ## Walkthrough
 
