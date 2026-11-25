@@ -401,13 +401,15 @@ class AIService:
             model_fields = {}
 
         merged_fields = dict(model_fields)
-        # Canonical fields used by the existing analyzer are source-grounded.
+        # Critical routing fields must come from explicit source text. Do not
+        # let a model guess a vendor, invoice number, total, or payment status.
+        for key in ("Vendor", "Invoice Number", "Total Amount", "Payment Status"):
+            merged_fields[key] = parsed_fields[key]
+        # Use deterministic source parsing wherever it found a value; retain
+        # other provider-extracted fields only when the parser cannot find them.
         for key, value in parsed_fields.items():
-            if key == "Payment Status" or value != "Not detected":
+            if value != "Not detected":
                 merged_fields[key] = value
-        # Never accept a model-generated PAID label when the source does not
-        # explicitly establish that status.
-        merged_fields["Payment Status"] = parsed_fields["Payment Status"]
         result["confidence"] = result.get("confidence", 0.96)
         return self._apply_invoice_routing(result, merged_fields)
 
@@ -654,6 +656,13 @@ class AIService:
   "sla_hours": 48,
   "workflow": [{{"step_name": "string", "node_type": "Start/AI Analysis/Document Validation/Approval/End", "role": "string", "status": "Completed/Active/Pending"}}]
 }}
+
+Payment-status safety rules:
+- UNPAID is not PAID. Never infer PAID from a substring match.
+- Use PAID only for an explicit Payment Status / Invoice Status value of PAID, or a standalone PAID stamp/watermark.
+- Treat UNPAID, NOT PAID, PAYMENT PENDING, OUTSTANDING, and BALANCE DUE as UNPAID.
+- If the document does not explicitly establish status, return "Not detected" and route for manual verification.
+- Never claim a watermark, signature, tax check, or verification that is not explicitly visible in the supplied text.
 
 Document Content:
 {content[:4000]}
