@@ -85,7 +85,12 @@ class AIService:
                     candidate,
                     re.IGNORECASE,
                 )
-                return nested.group(1).strip() if nested else candidate
+                if nested:
+                    return nested.group(1).strip()
+                # A new labelled field means the previous value is absent.
+                if re.match(r"^[A-Za-z][A-Za-z /()_-]{1,35}\s*:", candidate):
+                    break
+                return candidate
         return "Not detected"
 
     @staticmethod
@@ -117,12 +122,12 @@ class AIService:
                 candidate = next_line.strip()
                 if not candidate:
                     continue
+                # Stop before reading the next field's number as this field's amount.
+                if re.match(r"^[A-Za-z][A-Za-z /()_-]{1,35}\s*:", candidate):
+                    break
                 amount = cls._first_money_token(candidate)
                 if amount != "Not detected":
                     return amount
-                # Stop when another labelled field begins; do not steal its amount.
-                if re.match(r"^[A-Za-z][A-Za-z /()_-]{1,35}\s*:", candidate):
-                    break
         return "Not detected"
 
     @staticmethod
@@ -172,7 +177,7 @@ class AIService:
         text = content or ""
         lines = text.replace("\r\n", "\n").replace("\r", "\n").splitlines()
 
-        currency = "USD"
+        currency = "Not detected"
         if re.search(r"\bINR\b|\bRs\.?\b|₹", text, re.IGNORECASE):
             currency = "INR"
         elif re.search(r"\bEUR\b|€", text, re.IGNORECASE):
