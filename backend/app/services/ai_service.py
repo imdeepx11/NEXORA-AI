@@ -153,7 +153,7 @@ class AIService:
 
         status_value = AIService._label_value(
             text,
-            r"(?:payment\s+status|invoice\s+status|payment\s+state)",
+            r"(?:payment\s+status|invoice\s+status|payment\s+state|status)",
         )
         if status_value != "Not detected":
             normalized = status_value.strip().upper().rstrip(".")
@@ -661,6 +661,13 @@ class AIService:
   "sla_hours": 48,
   "workflow": [{{"step_name": "string", "node_type": "Start/AI Analysis/Document Validation/Approval/End", "role": "string", "status": "Completed/Active/Pending"}}]
 }}
+
+Payment-status safety rules:
+- UNPAID is not PAID. Never infer PAID from a substring match.
+- Use PAID only for an explicit Payment Status / Invoice Status value of PAID, or a standalone PAID stamp/watermark.
+- Treat UNPAID, NOT PAID, PAYMENT PENDING, OUTSTANDING, and BALANCE DUE as UNPAID.
+- If the document does not explicitly establish status, return "Not detected" and route for manual verification.
+- Never claim a watermark, signature, tax check, or verification that is not explicitly visible in the supplied text.
 
 Payment-status safety rules:
 - UNPAID is not PAID. Never infer PAID from a substring match.
