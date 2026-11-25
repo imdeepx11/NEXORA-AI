@@ -11,18 +11,15 @@ from app.api.auth import require_auth
 router = APIRouter(prefix="/api/ai", tags=["ai"], dependencies=[Depends(require_auth)])
 
 class ChatRequest(BaseModel):
-    document_id: str
+    # The frontend sends the database document ID as a JSON number.
+    # Keep this typed as int so Pydantic v2 does not reject the request with 422.
+    document_id: int
     question: str
 
 @router.post("/chat")
 def chat_with_doc(req: ChatRequest, db: Session = Depends(get_db), current_user: User = Depends(require_auth)):
-    try:
-        doc_id = int(req.document_id)
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid document_id format")
-
     doc = db.query(Document).filter(
-        Document.id == doc_id,
+        Document.id == req.document_id,
         Document.organization_id == current_user.organization_id
     ).first()
     if not doc:
