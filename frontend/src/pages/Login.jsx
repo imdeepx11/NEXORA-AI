@@ -186,6 +186,59 @@ export default function Login({ onLoginSuccess, darkMode, onToggleDarkMode }) {
           </div>
 
           <div className="login-credit">Developed and Designed by <strong>Deepak Gupta</strong></div>
+
+          <svg className="login-rajput-ornament" viewBox="0 0 460 460" aria-hidden="true" focusable="false">
+            <defs>
+              <g id="nexora-raj-paisley" stroke="#214b3a" strokeWidth="1.8" strokeLinejoin="round">
+                <path d="M0 -23 C-12 -31 -27 -19 -25 -4 C-23 10 -8 24 0 31 C8 22 23 8 25 -5 C27 -20 12 -31 0 -23Z" fill="#eadcc0" />
+                <path d="M0 20 C-10 9 -9 -8 0 -13 C10 -19 19 -9 15 1 C12 9 3 10 1 4 C0 1 3 -2 6 -1" fill="none" stroke="#aa7a24" strokeWidth="2.2" strokeLinecap="round" />
+                <path d="M0 -18 C-4 -13 -5 -8 -3 -4" fill="none" stroke="#2e6450" strokeWidth="1.5" strokeLinecap="round" />
+                <circle cx="0" cy="-23" r="2.5" fill="#aa7a24" stroke="none" />
+              </g>
+              <g id="nexora-raj-lotus" stroke="#214b3a" strokeWidth="1.45" strokeLinejoin="round">
+                <g fill="#eadcc0">
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(45)" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(90)" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(135)" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(180)" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(225)" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(270)" />
+                  <path d="M0 -17 C-10 -12 -10 -2 0 5 C10 -2 10 -12 0 -17Z" transform="rotate(315)" />
+                </g>
+                <circle r="6.2" fill="#aa7a24" />
+                <circle r="2.2" fill="#214b3a" stroke="none" />
+              </g>
+              <g id="nexora-raj-feather" stroke="#214b3a" strokeWidth="1.6" strokeLinejoin="round">
+                <path d="M0 27 C-19 9 -24 -10 -12 -26 C-5 -36 8 -38 18 -29 C31 -17 20 2 0 27Z" fill="#e8d8b8" />
+                <path d="M0 24 C2 5 6 -12 15 -28" fill="none" stroke="#aa7a24" strokeWidth="2" strokeLinecap="round" />
+                <path d="M5 -15 C-5 -22 -12 -12 -7 -4 C-3 2 7 1 10 -6 C12 -11 9 -14 5 -15Z" fill="#2e6450" />
+                <circle cx="3" cy="-8" r="3.2" fill="#aa7a24" stroke="none" />
+              </g>
+            </defs>
+
+            <circle cx="230" cy="230" r="226" fill="none" stroke="#214b3a" strokeWidth="1.15" opacity=".24" />
+            <circle cx="230" cy="230" r="217" fill="none" stroke="#aa7a24" strokeWidth=".9" strokeDasharray="1.5 7" strokeLinecap="round" opacity=".48" />
+
+            <g opacity=".92">
+              <use href="#nexora-raj-feather" transform="translate(43 238) rotate(-33) scale(.62)" />
+              <use href="#nexora-raj-paisley" transform="translate(78 385) rotate(-38) scale(.62)" />
+              <use href="#nexora-raj-lotus" transform="translate(230 454) scale(.72)" />
+              <use href="#nexora-raj-paisley" transform="translate(382 385) rotate(38) scale(.62)" />
+              <use href="#nexora-raj-feather" transform="translate(417 238) rotate(33) scale(.62)" />
+            </g>
+
+            <g fill="#aa7a24" opacity=".68">
+              <circle cx="26" cy="305" r="2" />
+              <circle cx="126" cy="438" r="1.7" />
+              <circle cx="334" cy="438" r="1.7" />
+              <circle cx="434" cy="305" r="2" />
+            </g>
+            <g fill="none" stroke="#2e6450" strokeWidth="1.2" opacity=".55">
+              <path d="M57 337 l5 -5 l5 5 l-5 5Z" />
+              <path d="M398 337 l5 -5 l5 5 l-5 5Z" />
+            </g>
+          </svg>
         </section>
 
         {/* Right auth panel */}
